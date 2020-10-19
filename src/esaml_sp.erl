@@ -169,7 +169,7 @@ validate_logout_request(Xml, SP = #esaml_sp{}) ->
         fun(X) ->
             case xmerl_xpath:string("/samlp:LogoutRequest", X, [{namespace, Ns}]) of
                 [#xmlElement{}] -> X;
-                _ -> {error, bad_assertion}
+                _ -> {error, "bad_assertion: esaml_sp:172"}
             end
         end,
         fun(X) ->
@@ -201,7 +201,7 @@ validate_logout_response(Xml, SP = #esaml_sp{}) ->
         fun(X) ->
             case xmerl_xpath:string("/samlp:LogoutResponse", X, [{namespace, Ns}]) of
                 [#xmlElement{}] -> X;
-                _ -> {error, bad_assertion}
+                _ -> {error, "bad_assertion: esaml_sp:204"}
             end
         end,
         fun(X) ->
@@ -250,12 +250,12 @@ validate_assertion(Xml, DuplicateFun, SP = #esaml_sp{}) ->
                         xmerl_xpath:string("/saml:Assertion", DecryptedAssertion, [{namespace, Ns}]) of
                         [A2] -> A2
                     catch
-                        _Error:_Reason -> {error, bad_assertion}
+                        _Error:_Reason -> {error, "bad_assertion: esaml_sp:253"}
                     end;
                 _ ->
                     case xmerl_xpath:string("/samlp:Response/saml:Assertion", X, [{namespace, Ns}]) of
                         [A3] -> A3;
-                        _ -> {error, bad_assertion}
+                        _ -> {error, "bad_assertion: esaml_sp:258"}
                     end
             end
         end,
